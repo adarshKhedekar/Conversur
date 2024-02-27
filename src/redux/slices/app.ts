@@ -17,8 +17,8 @@ const slice = createSlice({
   initialState,
   reducers: {
     toggleSidebar(state) {
-      console.log(state.sidebar.open);
       state.sidebar.open = !state.sidebar.open;
+      console.log(state.sidebar.open)
     },
     updateSidebarType(state, action: PayloadAction<any>) {
       state.sidebar.type = action.payload.type;

@@ -7,8 +7,6 @@ import mainlogo from '../assets/mainlogo.jpg'
 import Image from 'next/image'
 import ChatElement from './ChatElement';;
 import Conversation from './Conversation';
-import Contact from "./Contact";
-import { useSelector } from '@/redux/store';
 
 interface NavAction {
     index: number;
@@ -33,11 +31,12 @@ const navActions: NavAction[] = [
 ]
 const Dashboard = () => {
     const [active, setActive] = useState<number>(0);
+    
     return (
         <div className='w-lvw h-lvh flex'>
             <div className='h-screen w-20 bg-background shadow-2xl px-2 py-4 flex flex-col justify-between text-textColor'>
                 <div className='flex flex-col gap-4 items-center'>
-                    <Image src={mainlogo} alt="" className='rounded-xl h-14 shadow-lg mix-blend-multiply cursor-pointer' />
+                    <Image src={mainlogo} alt="" className='rounded-xl shadow-lg mix-blend-multiply cursor-pointer' />
 
                     {navActions.map((each: NavAction, index: number) => {
                         return <div key={index}>
@@ -54,7 +53,6 @@ const Dashboard = () => {
 
             <ChatElement/>
             <Conversation/>
-            <Contact/>
         </div>
     )
 }

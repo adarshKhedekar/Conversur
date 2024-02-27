@@ -106,10 +106,10 @@ const ChatElement = () => {
                     <Search placeholder="input search text" allowClear onSearch={onSearch} />
                 </div>
 
-                <span className="flex gap-[4px] items-center pb-2 cursor-pointer">
+                <div className="flex gap-[4px] items-center pb-2 cursor-pointer">
                     <MdOutlineArchive size={22}/>
                     <span className="text-sm text-primaryGradientFrom/[0.7] rounded-md p-[2px]">Archieved</span>
-                </span>
+                </div>
 
             </div>
 
