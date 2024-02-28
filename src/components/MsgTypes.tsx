@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 
 
-const ReplyMsg = ({ el }: any) => {
+const ReplyMsg = ({ el, menu }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false)
     return (
         <div className={`flex ${el.incoming ? 'justify-start' : 'justify-end'}`}>
@@ -31,17 +31,17 @@ const ReplyMsg = ({ el }: any) => {
 
 
 
-            <div className='relative'>
+           {menu && <div className='relative'>
                 <BsThreeDotsVertical onClick={() => setShowMenu(prev => !prev)} />
                 {showMenu && <span className='absolute -top-4 left-4 w-40 z-10'>Hello world</span>}
-            </div>
+            </div>}
         </div>
     )
 }
-const DocMsg = ({ el }: any) => {
+const DocMsg = ({ el, menu }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false)
     return (
-        <div className={`flex ${el.incoming ? 'justify-start ' : 'justify-end'}  w-[300px] break-all`}>
+        <div className={`flex ${el.incoming ? 'justify-start ' : 'justify-end'}  w-[280px] break-all`}>
 
             <div className={`flex flex-col p-2 w-full ${el.incoming ? 'text-textColor bg-background' : 'bg-gradient-to-br from-primaryGradientFrom to-primaryGradientTo/[0.7] text-white'} rounded-lg`}>
 
@@ -52,14 +52,14 @@ const DocMsg = ({ el }: any) => {
                 <span className='text-center text-sm'>{el.message}</span>
             </div>
 
-            <div className='relative'>
+            {menu && <div className='relative'>
                 <BsThreeDotsVertical onClick={() => setShowMenu(prev => !prev)} />
                 {showMenu && <span className='absolute -top-4 left-4 w-40'>Hello world</span>}
-            </div>
+            </div>}
         </div>
     )
 }
-const LinkMsg = ({ el }: any) => {
+const LinkMsg = ({ el, menu }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false)
     return (
         <div className={`flex ${el.incoming ? 'justify-start' : 'justify-end'}`}>
@@ -70,14 +70,14 @@ const LinkMsg = ({ el }: any) => {
                 <span className='text-center text-sm'>{el.message}</span>
 
             </Link>
-            <div className='relative'>
+            {menu && <div className='relative'>
                 <BsThreeDotsVertical onClick={() => setShowMenu(prev => !prev)} />
                 {showMenu && <span className='absolute -top-4 left-4 w-40'>Hello world</span>}
-            </div>
+            </div>}
         </div>
     )
 }
-const ImgMsg = ({ el }: any) => {
+const ImgMsg = ({ el, menu }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false)
     return (
         <div className={`flex ${el.incoming ? 'justify-start' : 'justify-end'} rounded-lg`}>
@@ -87,15 +87,15 @@ const ImgMsg = ({ el }: any) => {
                 <span className='text-center text-sm'>{el.message}</span>
 
             </div>
-            <div className='relative'>
+            {menu && <div className='relative'>
                 <BsThreeDotsVertical onClick={() => setShowMenu(prev => !prev)} />
                 {showMenu && <span className='absolute -top-4 left-4 w-40'>Hello world</span>}
-            </div>
+            </div>}
         </div>
     )
 }
 
-const NormalMsg = ({ el }: any) => {
+const NormalMsg = ({ el, menu }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false)
     return (
         <div className={`flex ${el.incoming ? 'justify-start' : 'justify-end'} rounded-lg`}>
@@ -104,10 +104,10 @@ const NormalMsg = ({ el }: any) => {
                 {el.message}
 
             </div>
-            <div className='relative'>
+            {menu && <div className='relative'>
                 <BsThreeDotsVertical onClick={() => setShowMenu(prev => !prev)} />
                 {showMenu && <span className='absolute -top-4 left-4 w-40 z-20'>Hello world</span>}
-            </div>
+            </div>}
         </div>
     );
 };

@@ -80,7 +80,7 @@ const ChatHistory = [
     },
 ];
 
-const Message = () => {
+const Message = ({menu}: {menu: boolean}) => {
     return (
         <div className='flex flex-col gap-2'>
             {
@@ -92,19 +92,19 @@ const Message = () => {
                     case "msg":
                         switch (el.subtype) {
                             case "img":
-                                return <ImgMsg key={index} el={el}/>
+                                return <ImgMsg key={index} el={el} menu={menu}/>
 
                             case "link":
-                                return <LinkMsg key={index} el={el}/>
+                                return <LinkMsg key={index} el={el} menu={menu}/>
 
                             case "doc":
-                                return <DocMsg key={index} el={el} />
+                                return <DocMsg key={index} el={el}  menu={menu}/>
 
                             case "reply":
-                                return <ReplyMsg key={index} el={el} />
+                                return <ReplyMsg key={index} el={el} menu={menu} />
 
                             default:
-                                return <NormalMsg key={index} el={el} />
+                                return <NormalMsg key={index} el={el}  menu={menu}/>
                         }
                     default:
                         return <div key={index}></div>

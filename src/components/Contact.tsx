@@ -1,7 +1,7 @@
 "use client"
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from '@/redux/store';
-import { toggleSidebar } from "@/redux/slices/app";
+import { toggleSidebar, updateSidebarType } from "@/redux/slices/app";
 import { LuUser2 } from "react-icons/lu";
 import { Avatar } from 'antd';
 import { GoDeviceCameraVideo } from "react-icons/go";
@@ -10,15 +10,18 @@ import { AiOutlineStop } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import mainlogo from '@/assets/mainlogo.jpg'
 import Image from "next/image";
-import { Switch, Button } from "antd";
+import { Switch } from "antd";
 import { useState } from "react";
+import Model from '@/components/Model'
+
 
 const Contact = () => {
   const dispatch = useDispatch();
   const [mute, setMute] = useState<boolean>(false);
 
+
   return (
-    <div className="w-[29%] bg-white flex flex-col text-textColor gap-2">
+    <div className="w-[40%] bg-white flex flex-col text-textColor gap-2 shadow">
 
       <div className="flex gap-6 py-6 px-2 bg-background">
         <RxCross2 size={20} onClick={() => dispatch(toggleSidebar())} className="cursor-pointer" />
@@ -55,7 +58,7 @@ const Contact = () => {
         <hr className="border-[1px] border-background mb-[1px]" />
 
         <div className="flex flex-col gap-4 px-2 cursor-pointer">
-          <div className="flex justify-between px-4 items-center">
+          <div className="flex justify-between px-4 items-center" onClick={() => dispatch(updateSidebarType("SHARED"))}>
             <span className="text-xs">Media, links and docs</span>
             <div className="flex gap-2 items-center">
               <span className="text-xs text-primaryGradientFrom">201</span>
@@ -70,7 +73,7 @@ const Contact = () => {
         </div>
 
         <hr className="border-[1px] border-background mt-2" />
-        <div className="flex justify-between px-2 text-sm items-center text-textColor/[0.8] cursor-pointer">
+        <div className="flex justify-between px-2 text-sm items-center text-textColor/[0.8] cursor-pointer" onClick={() => dispatch(updateSidebarType("STARRED"))}>
           <div className="flex gap-2 items-center">
             <span><FaStar /></span>
             <span>Starred Messages</span>
@@ -103,14 +106,8 @@ const Contact = () => {
         </div>
 
         <div className="px-2 flex gap-4 justify-center py-2">
-          <Button type="primary" ghost danger className="flex gap-2 items-center">
-            <AiOutlineStop />
-            <span>Block</span>
-          </Button>
-          <Button type="primary" danger className="flex gap-2 items-center">
-            <MdDelete />
-            <span>Delete</span>
-          </Button>
+          <Model title={'Block'} icon={<AiOutlineStop/>}/>
+          <Model title={'Delete'} icon={<MdDelete/>}/>
         </div>
 
       </div>

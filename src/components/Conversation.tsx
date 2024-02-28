@@ -9,21 +9,25 @@ import Message from "./Message";
 import ChatInput from "./ChatInput";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/redux/slices/app";
-import Sidebar from './Sidebar'
 import { useEffect, useState } from "react";
+import Contact from "./Contact";
+import StarredMessages from "./StarredMessages";
+import SharedMessages from "./SharedMessages";
 
 const Conversation = () => {
     const dispatch = useDispatch();
     const [sidebar, showsidebar] = useState<boolean>(false);
-    const state = useSelector((state: any) => state.app.sidebar.open);
+    const [sidebarType, setSidebarType] = useState<string>("CONTACT")
+    const { open, type } = useSelector((state: any) => state.app.sidebar);
 
     useEffect(() => {
-        showsidebar(state)
-    },[state])
+        showsidebar(open)
+        setSidebarType(type)
+    }, [open, type])
 
     return (
         <>
-            <div className={`w-[calc(100%-368px)] h-full flex flex-col`}>
+            <div className={`w-full h-full flex flex-col`}>
 
                 {/* Header */}
                 <div className='flex justify-between py-4 px-6 items-center'>
@@ -51,14 +55,25 @@ const Conversation = () => {
 
                 {/* Messages */}
                 <div className="grow bg-white overflow-y-auto no-scrollbar px-6 py-2">
-                    <Message />
+                    <Message menu={true}/>
                 </div>
 
                 {/* Input */}
                 <ChatInput />
 
             </div>
-            {sidebar && <Sidebar/>}
+            {sidebar && (() => {
+                switch (sidebarType){
+                    case "STARRED":
+                    return <StarredMessages />
+
+                    case "SHARED":
+                    return <SharedMessages />
+                    
+                    default:
+                    return <Contact/>
+                }
+            })()}
         </>
     )
 }

@@ -1,13 +1,13 @@
 "use client"
 import ReduxProvider from "@/redux/redux-provider";
-import Dashboard from "@/components/Dashboard";
+import Home from "@/components/Home";
 
-export default function Home() {
+export default function page() {
 
   return (
     <ReduxProvider>
-      <div className="bg-background font-poppins">
-        <Dashboard />
+      <div className="flex w-full">
+        <Home />
       </div>
     </ReduxProvider>
   );

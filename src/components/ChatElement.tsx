@@ -1,3 +1,4 @@
+"use client"
 import { FaCircleNotch } from "react-icons/fa";
 import { Input } from 'antd';
 import type { SearchProps } from 'antd/es/input/Search';
@@ -93,7 +94,7 @@ const ChatList = [
 const ChatElement = () => {
     const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
     return (
-        <div className="flex flex-col h-full w-72 bg-white shadow-lg px-4 pt-6">
+        <div className="flex flex-col h-full w-96 bg-white shadow-lg px-4 pt-6">
 
             <div className="flex flex-col gap-4 border-b-[1px] border-textColor/[0.5]">
 

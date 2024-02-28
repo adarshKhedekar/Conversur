@@ -5,12 +5,12 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { CiSettings, CiUser } from "react-icons/ci";
 import mainlogo from '../assets/mainlogo.jpg'
 import Image from 'next/image'
-import ChatElement from './ChatElement';;
-import Conversation from './Conversation';
+import Link from 'next/link';
 
 interface NavAction {
     index: number;
     logo: JSX.Element; // Assuming these logos are React components
+    navigate: string;
 }
 
 const iconProps = {
@@ -24,24 +24,26 @@ const iconProps = {
 const activebg: string = `bg-gradient-to-br from-primaryGradientFrom to-primaryGradientTo text-white`
 
 const navActions: NavAction[] = [
-    { index: 0, logo: <LuUsers2 /> },
-    { index: 1, logo: <AiOutlineMessage /> },
-    { index: 2, logo: <FaPhoneAlt /> },
-    { index: 2, logo: <CiSettings  />},
+    { index: 0, logo: <LuUsers2 /> , navigate: '/'},
+    { index: 1, logo: <AiOutlineMessage />, navigate: '/' },
+    { index: 2, logo: <FaPhoneAlt />, navigate: '/' },
+    { index: 2, logo: <CiSettings />, navigate:'/settings'},
 ]
 const Dashboard = () => {
     const [active, setActive] = useState<number>(0);
     
     return (
-        <div className='w-lvw h-lvh flex'>
+        
             <div className='h-screen w-20 bg-background shadow-2xl px-2 py-4 flex flex-col justify-between text-textColor'>
                 <div className='flex flex-col gap-4 items-center'>
                     <Image src={mainlogo} alt="" className='rounded-xl shadow-lg mix-blend-multiply cursor-pointer' />
 
                     {navActions.map((each: NavAction, index: number) => {
-                        return <div key={index}>
-                            <div style={iconProps} className={`${active === index ? activebg : ''}`} onClick={() => setActive(index)}>{each.logo}</div>
-                        </div>
+                        return <Link href={each.navigate} key={index}>
+                            <div  style={iconProps} className={`${active === index ? activebg : ''}`} onClick={() => setActive(index)}>
+                                <span>{each.logo}</span>
+                            </div>
+                        </Link>
                     })}
                     
                 </div>
@@ -50,10 +52,6 @@ const Dashboard = () => {
                     <CiUser style={iconProps} />
                 </div>
             </div>
-
-            <ChatElement/>
-            <Conversation/>
-        </div>
     )
 }
 
