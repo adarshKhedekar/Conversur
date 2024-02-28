@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { LuUser2 } from "react-icons/lu";
@@ -62,7 +63,9 @@ const list: listInterface[] = [
 ]
 
 const Settings = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -83,7 +86,7 @@ const Settings = () => {
         <div className="flex bg-white w-full">
             <div className='flex flex-col gap-2 p-4 shadow w-80 bg-background overflow-y-auto no-scrollbar'>
                 <div className="flex items-center gap-4">
-                    <FaArrowLeft size={20} className="cursor-pointer"/>
+                    <FaArrowLeft size={20} className="cursor-pointer" onClick={() => router.back()}/>
                     <span className="text-lg font-semibold">Settings</span>
                 </div>
 
