@@ -40,7 +40,7 @@ interface CreateGroupInterface{
 }
 
 const CreateGroup = ({isModalOpen, handleOk, handleCancel}: CreateGroupInterface) => (
-    <Modal title="Create Group" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ghost: true}}>
+    <Modal title="Create Group" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ghost: true}} footer={null}>
   <Select
     mode="multiple"
     style={{ width: '100%' }}

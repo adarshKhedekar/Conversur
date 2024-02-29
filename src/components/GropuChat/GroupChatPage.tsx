@@ -20,7 +20,7 @@ const GroupChatPage = () => {
   return (
     <div>
        <GroupChatElement showModal={showModal}/>
-       <CreateGroup isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} />
+       {isModalOpen && <CreateGroup isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} />}
     </div>
   )
 }

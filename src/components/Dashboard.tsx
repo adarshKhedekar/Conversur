@@ -6,7 +6,7 @@ import { CiSettings, CiUser } from "react-icons/ci";
 import mainlogo from '../assets/mainlogo.jpg'
 import Image from 'next/image'
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface NavAction {
     index: number;
@@ -27,16 +27,16 @@ const activebg: string = `bg-gradient-to-br from-primaryGradientFrom to-primaryG
 const navActions: NavAction[] = [
     { index: 0, logo: <LuUsers2 /> , navigate: '/'},
     { index: 1, logo: <AiOutlineMessage />, navigate: '/' },
-    { index: 2, logo: <FaPhoneAlt />, navigate: '/' },
+    { index: 2, logo: <FaPhoneAlt />, navigate: '/call' },
     { index: 2, logo: <CiSettings />, navigate:'/settings'},
 ]
 const Dashboard = () => {
     const [active, setActive] = useState<number>(0);
-    const router = useRouter();
     const currRoute = usePathname();
     
     useEffect(() => {
         {currRoute === '/settings' && setActive(3)};
+        {currRoute === '/call' && setActive(2)};
     }, [currRoute])
     
     return (

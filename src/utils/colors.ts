@@ -5,7 +5,8 @@ const colors = {
     background: "#F6F5F5",
     white:"#FFF",
     textColor: '#212121',
-    link: '#0000EE'
+    link: '#0000EE', 
+    call: '#49B568'
 };
   
   export {colors};

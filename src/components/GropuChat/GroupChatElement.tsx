@@ -111,7 +111,7 @@ const ChatElement = ({showModal}: ChatElementInterface) => {
                     <Search placeholder="input search text" allowClear onSearch={onSearch} />
                 </div>
 
-                <div className="flex justify-between items-center pb-2">
+                <div className="flex justify-between items-center p-2">
                     <span className="text-sm text-primaryGradientFrom/[0.7] rounded-md p-[2px]">Create New Group</span>
                     <FiPlusCircle size={20} onClick={showModal} className="text-primaryGradientFrom/[0.7] cursor-pointer"/>
                 </div>
