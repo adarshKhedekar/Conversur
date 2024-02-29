@@ -19,8 +19,9 @@ export default function RootLayout({
 }>) {
 
   const isLoginPage = usePathname() === "/login";
-  const isRegisterPage = usePathname() === "/register";
-  const shouldRenderDashboard = !isLoginPage && !isRegisterPage;
+  const resetPasswordPage = usePathname() === "/reset-password";
+  const newPasswordPage = usePathname() === "/new-password";
+  const shouldRenderDashboard = !isLoginPage && !resetPasswordPage && !newPasswordPage;
 
   return (
     <html lang="en">

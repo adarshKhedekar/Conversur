@@ -1,10 +1,10 @@
-
+import Authentication from "@/components/Auth/Authentication"
 
 const page = () => {
   return (
-    <div>
-      login
-    </div>
+    <>
+      <Authentication/>
+    </>
   )
 }
 

@@ -25,7 +25,7 @@ const Chats = ({ title, Chatlist }: ChatsProps) => {
             {Chatlist?.map((each: any) => {
                 return <div key={each.id} className='flex flex-col gap-2'>
 
-                    <div className="flex gap-2 items-center justify-center pb-[4px]">
+                    <div className="flex gap-2 items-center justify-center p-[6px]">
 
                         {each.online ? <Badge dot color="green" >
                             <Avatar shape="circle" icon={<LuUser2 />} />

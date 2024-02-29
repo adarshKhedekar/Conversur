@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LuUsers2 } from "react-icons/lu";
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { CiSettings, CiUser } from "react-icons/ci";
 import mainlogo from '../assets/mainlogo.jpg'
 import Image from 'next/image'
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface NavAction {
     index: number;
@@ -31,6 +32,12 @@ const navActions: NavAction[] = [
 ]
 const Dashboard = () => {
     const [active, setActive] = useState<number>(0);
+    const router = useRouter();
+    const currRoute = usePathname();
+    
+    useEffect(() => {
+        {currRoute === '/settings' && setActive(3)};
+    }, [currRoute])
     
     return (
         
