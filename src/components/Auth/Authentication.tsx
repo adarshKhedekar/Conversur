@@ -7,6 +7,10 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link"
+import { signIn } from 'next-auth/react'
+import toast from "react-hot-toast"
+import User from "@/models/user"
+import axios from "axios"
 const Authentication = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true)
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -15,9 +19,42 @@ const Authentication = () => {
   const password = useRef<HTMLInputElement>(null);
 
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    console.log(name.current?.value, email.current?.value, password.current?.value);
+  const handleSubmit = async(e: any) => {
+    e.preventDefault();
+    if (isLogin) {
+      const data = {
+        email: email.current?.value,
+        password: password.current?.value,
+      }
+      signIn('credentials', {
+        ...data,
+        redirect: false
+      }).then((callback) => {
+        if (callback?.error) {
+          toast.error(callback.error)
+        }
+        if (callback?.ok || !callback?.error) {
+          console.log(callback)
+          toast.success('Logged In')
+        }
+      })
+    } else {
+      const data = {
+        username: name.current?.value,
+        email: email.current?.value,
+        password: password.current?.value
+      }
+      const user = await axios.post('http://localhost:3000/api/register', data);
+      console.log(user)
+    }
+  }
+
+  const SocialActions = async (actions: string) => {
+    signIn(actions, {redirect: true}).then((callback) => {
+      if (callback?.ok) {
+      }
+    }).catch((err) => console.log(err));
+
   }
   return (
     <div className="flex justify-center items-center w-full h-full bg-white">
@@ -39,12 +76,12 @@ const Authentication = () => {
         <form onSubmit={handleSubmit}>
           {!isLogin && <input type="text" ref={name} placeholder="Enter your Username" required className="p-2 w-full outline-none border-2 border-textColor/[0.5] shadow rounded-lg text-sm mb-4" />}
 
-          <input type="email" ref={email}  placeholder="Enter your Email" required className="p-2 w-full outline-none border-2 border-textColor/[0.5] shadow rounded-lg text-sm mb-4" />
+          <input type="email" ref={email} placeholder="Enter your Email" required className="p-2 w-full outline-none border-2 border-textColor/[0.5] shadow rounded-lg text-sm mb-4" />
 
           <div className="flex justify-between p-2 w-full border-2 border-textColor/[0.5] shadow rounded-lg text-sm mb-4">
-            <input type={`${showPassword ? 'text': 'password'}`} ref={password} placeholder="Enter your Password" required className="outline-none" />
-            {showPassword && <FaEyeSlash size={20} onClick={() => setShowPassword(false)} className="text-textColor/[0.5] cursor-pointer"/> }
-            {!showPassword && <FaEye size={20} onClick={() => setShowPassword(true)}className="text-textColor/[0.5] cursor-pointer"/>}
+            <input type={`${showPassword ? 'text' : 'password'}`} ref={password} placeholder="Enter your Password" required className="outline-none" />
+            {showPassword && <FaEyeSlash size={20} onClick={() => setShowPassword(false)} className="text-textColor/[0.5] cursor-pointer" />}
+            {!showPassword && <FaEye size={20} onClick={() => setShowPassword(true)} className="text-textColor/[0.5] cursor-pointer" />}
           </div>
 
 
@@ -55,8 +92,8 @@ const Authentication = () => {
         <Divider>OR</Divider>
 
         <div className="flex justify-center gap-6">
-          <FcGoogle size={30} className="cursor-pointer" />
-          <FaGithub size={30} className="cursor-pointer" />
+          <FcGoogle size={30} className="cursor-pointer" onClick={() => SocialActions('google')} />
+          <FaGithub size={30} className="cursor-pointer" onClick={() => SocialActions('github')} />
         </div>
       </div>
     </div>

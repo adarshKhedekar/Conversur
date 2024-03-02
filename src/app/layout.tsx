@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
 import "./globals.css";
+import ToastContext from "@/context/ToastContext";
 import Dashboard from "@/components/DashboardChild";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,6 +30,7 @@ export default function RootLayout({
         <title>Conversur</title>
       </head>
       <body className={inter.className}>
+        <ToastContext/>
         <div className="w-lvw h-lvh flex bg-background font-poppins">
           {shouldRenderDashboard && <Dashboard />}
           {children}
