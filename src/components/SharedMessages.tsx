@@ -74,7 +74,7 @@ const SharedMessages = () => {
             </div>
             <div className="no-scrollbar overflow-y-auto">
                 <Tabs defaultActiveKey="1" centered onChange={onChange}>
-                    {tabsData.map(tab => (
+                    {tabsData.map((tab, index:number) => (
                         <Tabs.TabPane key={tab.key} tab={tab.label} >
                             <div className="flex flex-wrap p-2 gap-2">
                                 {tab.children.map((child: any, index: number) => {

@@ -114,7 +114,7 @@ const ChatElement = () => {
 
             </div>
 
-            <div className="flex flex-col overflow-y-auto no-scrollbar py-2 gap-4">
+            <div className="flex flex-col overflow-y-auto no-scrollbar py-2 gap-4 z-0">
 
                 <Chats title={'Pinned'} Chatlist={ChatList.filter((e) => e.pinned == true)}/>
                 <Chats title={'All Chats'} Chatlist={ChatList.filter((e) => e.pinned == false)}/>  

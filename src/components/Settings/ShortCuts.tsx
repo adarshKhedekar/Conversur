@@ -94,7 +94,7 @@ const ShortCuts = ({ isModalOpen, handleOk, handleCancel }: any) => {
         <Modal title="Keyboard ShortCuts" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={800} okButtonProps={{ 
             type: 'primary',
             ghost: true
-          }} centered>
+          }} centered footer={null}>
             <div className='grid grid-cols-2 gap-4'>
                 {list.map((each: any, index: number) => {
                     return <div key={index} className='flex gap-6'>

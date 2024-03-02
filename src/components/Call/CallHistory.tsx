@@ -24,8 +24,8 @@ const Chats = ({  Chatlist }: ChatsProps) => {
     return (
         <div className="flex flex-col gap-2">
 
-            {Chatlist?.map((each: any) => {
-                return <div key={each.id} className='flex flex-col gap-2'>
+            {Chatlist?.map((each: any, index: number) => {
+                return <div key={index} className='flex flex-col gap-2'>
 
                     <div className="flex gap-2 items-center justify-center py-4 px-2 shadow rounded-lg">
 
@@ -38,7 +38,7 @@ const Chats = ({  Chatlist }: ChatsProps) => {
                         }
 
                         <div className="flex flex-3 flex-col gap-[2px] w-[80%]">
-                            <span className="font-medium text-sm">{each.name}</span>
+                            <span className={`font-medium text-sm ${each.missed ? 'text-[red]' : ''}`}>{each.name}</span>
                             <span className="flex gap-2 text-xs">
                                 <span className='flex items-center'>
                                     {each.outgoing ? <MdArrowOutward className='text-call'/>: <GoArrowDownLeft className='text-[red]'/>}
