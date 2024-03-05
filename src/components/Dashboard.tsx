@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import { LuUsers2, LuUser } from "react-icons/lu";
 import { AiOutlineMessage } from "react-icons/ai";
@@ -8,6 +9,8 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoIosLogOut } from "react-icons/io";
+import { useRouter } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 
 interface NavAction {
     index: number;
@@ -32,14 +35,27 @@ const navActions: NavAction[] = [
     { index: 3, logo: <CiSettings />, navigate: '/settings' },
 ]
 const Dashboard = () => {
-    const [active, setActive] = useState<number>(0);
+    const session = useSession();
+    const [active, setActive] = useState<number | null>(null);
     const [showmenu, setShowmenu] = useState<boolean>(false);
     const currRoute = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
-        { currRoute === '/settings' && setActive(3) };
-        { currRoute === '/call' && setActive(2) };
-    }, [currRoute])
+        if(session?.status === 'unauthenticated'){
+            router.replace('/login')
+        }
+        
+        console.log(session)
+        {currRoute === '/' && setActive(0)}
+        {currRoute === '/settings' && setActive(3) };
+        {currRoute === '/call' && setActive(2) };
+        {currRoute === '/group' && setActive(1)};
+    }, [currRoute, router, session])
+
+    const handleLogout = async() => {
+        signOut()
+    }
 
     return (
 
@@ -68,7 +84,7 @@ const Dashboard = () => {
                         </Link>
                     <Link href={'/login'} className='text-sm flex gap-2 hover:font-semibold'>
                         <span><IoIosLogOut size={20}/></span>
-                        <span>Logout</span>
+                        <span onClick={handleLogout}>Logout</span>
                     </Link>
                 </div>}
             </div>

@@ -1,9 +1,11 @@
 import Profile from '@/components/Profile'
+import Dashboard from '@/components/Dashboard'
 const page = () => {
   return (
-    <div>
+    <>
+      <Dashboard/>
       <Profile/>
-    </div>
+    </>
   )
 }
 

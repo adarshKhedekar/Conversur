@@ -1,14 +1,19 @@
-"use client"
-import ReduxProvider from "@/redux/redux-provider";
+"use client";
 import Home from "@/components/Home";
+import Dashboard from "@/components/Dashboard";
+import { useSession } from "next-auth/react";
+import Loading from "@/components/Loading";
 
 export default function page() {
 
+  const {status} = useSession();
+
   return (
-    <ReduxProvider>
+    !(status === 'loading' || status === 'unauthenticated') ?( <>
+      <Dashboard />
       <div className="flex w-full">
         <Home />
       </div>
-    </ReduxProvider>
+    </>) : <Loading/>
   );
 }

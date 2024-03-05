@@ -1,4 +1,4 @@
-import NextAuth, {AuthOptions} from "next-auth";
+import NextAuth, { AuthOptions} from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
@@ -7,7 +7,14 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt'
 import User from "@/models/user"; 
 import { Adapter } from "next-auth/adapters";
+import {connect} from '@/dbConfig/dbConfig';
 
+let AuthUser: any;
+interface SessionUser {
+  username: string;
+  email: string;
+  id: string;
+}
 
 export const authOptions: AuthOptions = {
   adapter: MongoDBAdapter(clientPromise) as Adapter,
@@ -33,6 +40,7 @@ export const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials) {
+        connect()
         
         const email = credentials?.email.toLowerCase();
 
@@ -49,16 +57,28 @@ export const authOptions: AuthOptions = {
         );
 
         if (!passwordIsValid) {
-          throw new Error("Invalid credentials");
+          throw new Error("Wrong Password");
         }
-
+        AuthUser = user;
         return {
-          id: user._id.toString(),
-          ...user,
-        };
+          ...user
+        }
+        
       },
     }),
   ],
+  callbacks:{
+   async session({session}){
+    if(AuthUser){
+      session.user = {
+        username: AuthUser.username,
+        email: AuthUser.email,
+        id: AuthUser._id,
+      } as SessionUser;
+    }
+    return session;
+   }
+  },
   session:{
     strategy: 'jwt'
   },
