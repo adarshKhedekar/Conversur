@@ -5,16 +5,16 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt'
-import User from "@/models/user"; 
+import User from "@/models/users"; 
 import { Adapter } from "next-auth/adapters";
 import {connect} from '@/dbConfig/dbConfig';
 
-let AuthUser: any;
-interface SessionUser {
-  username: string;
-  email: string;
-  id: string;
-}
+// let AuthUser: any;
+// interface SessionUser {
+//   username: string;
+//   email: string;
+//   id: string;
+// }
 
 export const authOptions: AuthOptions = {
   adapter: MongoDBAdapter(clientPromise) as Adapter,
@@ -44,7 +44,7 @@ export const authOptions: AuthOptions = {
         
         const email = credentials?.email.toLowerCase();
 
-        const user = await User.findOne({ email });
+        let user = await User.findOne({ email });
 
         if (!user) {
           throw new Error("User does not exist.");
@@ -59,24 +59,37 @@ export const authOptions: AuthOptions = {
         if (!passwordIsValid) {
           throw new Error("Wrong Password");
         }
-        AuthUser = user;
-        return {
-          ...user
-        }
+        // AuthUser = user;
+        user = user._doc;
+
+        return user;
         
       },
     }),
   ],
   callbacks:{
-   async session({session}){
-    if(AuthUser){
-      session.user = {
-        username: AuthUser.username,
-        email: AuthUser.email,
-        id: AuthUser._id,
-      } as SessionUser;
-    }
+   async session({session, token}){
+    // console.log('fff', AuthUser)
+    // if(AuthUser){
+    //   session.user = {
+    //     username: AuthUser.username,
+    //     email: AuthUser.email,
+    //     id: AuthUser._id,
+    //   } as SessionUser;
+    // }else{
+    //   session.user = token
+    //   console.log('thokd' , token)
+    // }
+    // console.log('see', session)
+
+    session.user = token;
     return session;
+   },
+
+   //impliment jwt--->afterwards
+   async jwt({token, user}){
+    token = {...token, ...user};
+    return token;
    }
   },
   session:{

@@ -1,11 +1,12 @@
-import CallFeature from '@/components/Call/CallElement'
+import AddFriend from '@/components/AddFriend'
 import Dashboard from '@/components/Dashboard'
+import React from 'react'
 
 const page = () => {
   return (
     <>
       <Dashboard/>
-      <CallFeature/>
+      <AddFriend/>
     </>
   )
 }

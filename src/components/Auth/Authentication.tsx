@@ -12,6 +12,9 @@ import toast from "react-hot-toast"
 import axios from "axios";
 import { useRouter } from "next/navigation"
 import Loading from "../Loading"
+
+
+
 const Authentication = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true)
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -21,42 +24,40 @@ const Authentication = () => {
   const password = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
-  const {status} = useSession()
+  const { status } = useSession()
 
   useEffect(() => {
-    if(status === 'authenticated'){
+    if (status === 'authenticated') {
       router.replace('/')
     }
     console.log(status)
-  }, [status, router])
+  }, [status, router,])
 
-  const handleSubmit = async(e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (isLogin) {
       const data = {
         email: email.current?.value,
         password: password.current?.value,
       }
-      
+
       signIn('credentials', {
         ...data,
         redirect: false
       }).then((callback: any) => {
-        if (callback?.error) {
-          toast.error(callback.error)
-        }
-        if (callback?.ok || !callback?.error) {
-          console.log(callback)
-          toast.success('Logged In')
-          router.push('/');
+        if(callback.error){
+          toast.error(callback.error);
+        }else{
+          toast.success('Logged In');
+          router.push('/')
         }
       })
     } else {
-      if(password.current){
-        if(password.current.value.length < 8){
+      if (password.current) {
+        if (password.current.value.length < 8) {
           setError(true);
           return;
-        }else{
+        } else {
           setError(false);
         }
       }
@@ -67,21 +68,21 @@ const Authentication = () => {
       }
       let user = await axios.post('http://localhost:3000/api/register', data);
       console.log(user)
-      if(user?.data.savedUser){
+      if (user?.data.savedUser) {
         toast.success('Registered Successfully')
-        if(email.current) email.current.value = '';
-        if(password.current) password.current.value = '';
+        if (email.current) email.current.value = '';
+        if (password.current) password.current.value = '';
         setIsLogin(true)
-      }else{
+      } else {
         toast.error(user.data.message)
       }
     }
   }
 
   const SocialActions = async (provider: string) => {
-      signIn(provider, { redirect: false });  
+    signIn(provider, { redirect: false });
   }
-  
+
   return (
     !(status === 'loading' || status === 'authenticated') ? (<div className="flex justify-center items-center w-full h-full bg-white">
 
@@ -111,7 +112,7 @@ const Authentication = () => {
           </div>
           {error && <span className="text-xs text-[red]">Length of Password should be greater than 6</span>}
 
-          <button type="submit" className="bg-gradient-to-br from-primaryGradientFrom to-primaryGradientTo text-white py-2 w-full rounded-lg mt-4">Submit</button>
+          <button type="submit" className="bg-gradient-to-br from-primaryGradientFrom to-primaryGradientTo text-white py-2 w-full rounded-lg mt-4">{isLogin ? 'Login' : 'Register'}</button>
         </form>
         {isLogin && <Link href={'/reset-password'} className="text-right text-link text-xs cursor-pointer hover:underline">Forgot Password?</Link>}
 
@@ -122,7 +123,7 @@ const Authentication = () => {
           <FaGithub size={30} className="cursor-pointer" onClick={() => SocialActions('github')} />
         </div>
       </div>
-    </div>) : <Loading/>
+    </div>) : <Loading />
   )
 }
 

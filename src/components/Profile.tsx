@@ -34,7 +34,7 @@ const ChatElement = () => {
                     <span className="text-2xl font-semibold">Profile</span>
                 </div>
 
-                {showname && name.length > 0 && <div className="flex flex-col gap-2">
+                {showname && name?.length > 0 && <div className="flex flex-col gap-2">
                     <span className="text-xs text-textColor/[0.5] font-semibold">Name</span>
 
                     <div className="flex justify-between items-center px-2">
@@ -61,7 +61,7 @@ const ChatElement = () => {
                     value={name}
                 />}
 
-                {showabout && about.length > 0 && <div className="flex flex-col gap-2">
+                {showabout && about?.length > 0 && <div className="flex flex-col gap-2">
 
                     <span className="text-xs text-textColor/[0.5] font-semibold">About</span>
 

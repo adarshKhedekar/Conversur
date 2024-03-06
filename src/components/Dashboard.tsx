@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { LuUsers2, LuUser } from "react-icons/lu";
 import { AiOutlineMessage } from "react-icons/ai";
-import { FaPhoneAlt } from "react-icons/fa";
+import { IoMdPersonAdd } from "react-icons/io"
 import { CiSettings, CiUser } from "react-icons/ci";
 import mainlogo from '../assets/mainlogo.jpg'
 import Image from 'next/image'
@@ -31,7 +31,7 @@ const activebg: string = `bg-gradient-to-br from-primaryGradientFrom to-primaryG
 const navActions: NavAction[] = [
     { index: 0, logo: <AiOutlineMessage />, navigate: '/' },
     { index: 1, logo: <LuUsers2 />, navigate: '/group' },
-    { index: 2, logo: <FaPhoneAlt />, navigate: '/call' },
+    { index: 2, logo: <IoMdPersonAdd />, navigate: '/add-friend' },
     { index: 3, logo: <CiSettings />, navigate: '/settings' },
 ]
 const Dashboard = () => {
@@ -42,19 +42,16 @@ const Dashboard = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if(session?.status === 'unauthenticated'){
-            router.replace('/login')
-        }
-        
-        console.log(session)
         {currRoute === '/' && setActive(0)}
         {currRoute === '/settings' && setActive(3) };
-        {currRoute === '/call' && setActive(2) };
+        {currRoute === '/add-friend' && setActive(2) };
         {currRoute === '/group' && setActive(1)};
     }, [currRoute, router, session])
 
     const handleLogout = async() => {
-        signOut()
+        signOut({redirect: false}).then(() => {
+            router.push('/')
+        }).catch((err) => console.log('err', err))
     }
 
     return (
